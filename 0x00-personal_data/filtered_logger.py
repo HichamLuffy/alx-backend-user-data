@@ -77,8 +77,12 @@ def run() -> None:
     cursor.execute("SELECT * FROM users;")
     logger = get_logger()
     for row in cursor:
-        message = f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]}; password={row[4]}; ip={row[5]}; last_login={row[6]}; user_agent={row[7]};"
-        logger.info(message)
+        data = []
+        for desc, value in zip(cursor.description, row):
+            pair = f"{desc[0]}={str(value)}"
+            data.append(pair)
+        row_str = "; ".join(data)
+        logger.info(row_str)
     cursor.close()
     db.close()
 
