@@ -2,9 +2,8 @@
 """
 auth.py
 """
+from typing import List, TypeVar
 from flask import request
-from typing import *
-from typing import TypeVar
 
 
 class Auth:
@@ -28,7 +27,7 @@ class Auth:
             return None
         return request.headers.get('Authorization', None)
 
-    def current_user(self, request=None) -> TypeVar('User'):
+    def current_user(self, request=None) -> TypeVar("User"):
         """ current_user
         """
         return None
