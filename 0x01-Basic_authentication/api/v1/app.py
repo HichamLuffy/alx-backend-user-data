@@ -3,17 +3,16 @@
 
 
 from flask import Flask
-app = Flask(__name__)
+import os
 
+app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    """ Return a greeting"""
     return "Hello, World!"
 
-
 if __name__ == '__main__':
-    import os
     host = os.getenv('API_HOST', '127.0.0.1')
     port = int(os.getenv('API_PORT', 5000))
+    print(f"Running on {host}:{port}")
     app.run(host=host, port=port)
