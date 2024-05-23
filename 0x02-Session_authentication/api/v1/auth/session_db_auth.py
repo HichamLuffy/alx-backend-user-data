@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """SessionAuth module"""
-from datetime import datetime
+from datetime import datetime, timedelta
 from .session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 
@@ -31,7 +31,8 @@ class SessionDBAuth(SessionExpAuth):
             return user_session.user_id
         if user_session.created_at is None:
             return None
-        if datetime.now() > user_session.created_at + timedelta(seconds=self.session_duration):
+        x = user_session.created_at + timedelta(seconds=self.session_duration)
+        if datetime.now() > x:
             return None
         return user_session.user_id
 
