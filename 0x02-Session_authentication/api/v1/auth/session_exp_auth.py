@@ -7,6 +7,7 @@ from .session_auth import SessionAuth
 
 class SessionExpAuth(SessionAuth):
     """SessionExpAuth class"""
+
     def __init__(self):
         """Initialize SessionExpAuth"""
         super().__init__()
@@ -39,6 +40,7 @@ class SessionExpAuth(SessionAuth):
         created_at = session_info.get('created_at')
         if created_at is None:
             return None
-        if datetime.now() > created_at + timedelta(seconds=self.session_duration):
+        timeX = created_at + timedelta(seconds=self.session_duration)
+        if datetime.now() > timeX:
             return None
         return session_info.get('user_id')
