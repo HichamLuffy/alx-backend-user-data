@@ -23,6 +23,7 @@ elif os.getenv("AUTH_TYPE") == "basic_auth":
 elif getenv("AUTH_TYPE") == "session_auth":
     auth = SessionAuth()
 
+
 @app.before_request
 def before_request_func():
     """doc doc doc"""
