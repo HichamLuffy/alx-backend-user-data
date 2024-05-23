@@ -8,7 +8,6 @@ from flask import Flask, jsonify, abort, request, abort
 from flask_cors import CORS, cross_origin
 import os
 from api.v1.auth.auth import Auth
-from models import storage
 from api.v1.auth.basic_auth import BasicAuth
 from api.v1.auth.session_auth import SessionAuth
 
@@ -63,12 +62,6 @@ def forbidden(error) -> str:
     """ Forbidden handler
     """
     return jsonify({"error": "Forbidden"}), 403
-
-
-@app.teardown_appcontext
-def close_db(error):
-    """ Close Storage """
-    storage.close()
 
 
 if __name__ == "__main__":
