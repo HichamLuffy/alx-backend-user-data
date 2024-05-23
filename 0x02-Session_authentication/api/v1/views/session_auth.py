@@ -17,6 +17,10 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
 
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({}), 200
+
     if email is None or email == "":
         return jsonify({"error": "email missing"}), 400
     if password is None or password == "":
