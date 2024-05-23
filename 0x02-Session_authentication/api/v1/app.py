@@ -27,6 +27,8 @@ elif getenv("AUTH_TYPE") == "session_auth":
 @app.before_request
 def before_request_func():
     """doc doc doc"""
+    if auth is None:
+        return
     excluded_paths = [
         '/api/v1/status/',
         '/api/v1/unauthorized/',
@@ -36,6 +38,7 @@ def before_request_func():
         if auth.authorization_header(
                 request) is None and auth.session_cookie(request) is None:
             abort(401)
+        request.current_user = auth.current_user(request)
         if auth.current_user(request) is None:
             abort(403)
 
