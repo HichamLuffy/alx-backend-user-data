@@ -53,17 +53,17 @@ def logout() -> Response:
     return redirect("/")
 
 
-@app.route("/reset_password", methods=["PUT"])
-def reset_password():
-    """reset password"""
+@app.route("/reset_password", methods=["POST"], strict_slashes=False)
+def get_reset_password_token() -> str:
+    """doc doc doc"""
     email = request.form.get("email")
-    reset_token = request.form.get("reset_token")
-    new_password = request.form.get("new_password")
+
     try:
-        AUTH.update_password(reset_token, new_password)
+        reset_token = AUTH.get_reset_password_token(email)
     except ValueError:
         abort(403)
-    return jsonify({"email": email, "message": "Password updated"}), 200
+
+    return jsonify({"email": email, "reset_token": reset_token}), 200
 
 
 @app.route("/profile", methods=["GET"])
