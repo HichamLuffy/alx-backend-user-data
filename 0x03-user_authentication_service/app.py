@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request, make_response
 from flask import abort, Response, redirect
 from auth import Auth
 
+
 app = Flask(__name__)
 AUTH = Auth()
 
@@ -76,7 +77,7 @@ def profile():
     return jsonify({"email": user.email}), 200
 
 
-@app.route("/reset_password", methods=["PUT"])
+@app.route("/reset_password", methods=["PUT"], strict_slashes=False)
 def update_password() -> str:
     """update password"""
     email = request.form.get("email")
