@@ -39,10 +39,10 @@ class Auth:
         """register user"""
         try:
             self._db.find_user_by(email=email)
-            raise ValueError(f"User {email} already exists")
         except NoResultFound:
-            user = self._db.add_user(email, _hash_password(password))
-            return user
+            hashed_password = _hash_password(password)
+            return self._db.add_user(email, hashed_password)
+        raise ValueError(f"User {email} already exists")
 
     def create_session(self, email: str) -> str:
         """ create session """
