@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ auth module """
-
 from db import DB
 from user import User
 import bcrypt
@@ -13,8 +12,9 @@ def _hash_password(password: str) -> bytes:
     """Hash a password for storing."""
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
+
 def _generate_uuid() -> str:
-    """doc doc doc"""
+    """Generate a new UUID."""
     return str(uuid.uuid4())
 
 
