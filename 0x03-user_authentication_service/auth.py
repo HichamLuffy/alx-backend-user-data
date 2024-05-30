@@ -92,3 +92,13 @@ class Auth:
 
         pw = _hash_password(password)
         self._db.update_user(user.id, hashed_password=pw, reset_token=None)
+
+    def get_user_from_session_id(self, session_id: str):
+        """ get user from session id """
+        if session_id is None:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except NoResultFound:
+            return None
