@@ -24,13 +24,15 @@ def login() -> Response:
 
 
 @app.route("/users", methods=["POST"])
-def users() -> Response:
-    """doc doc doc"""
-    email = request.form["email"]
-    password = request.form["password"]
+def users():
+    email = request.form.get("email")
+    password = request.form.get("password")
     try:
         user = AUTH.register_user(email, password)
-        return jsonify({"email": email, "message": "user created"})
+        return jsonify({
+            "email": user.email,
+            "message": "user created"
+        })
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
