@@ -55,7 +55,7 @@ def logout() -> Response:
 
 @app.route("/reset_password", methods=["POST"], strict_slashes=False)
 def get_reset_password_token() -> str:
-    """doc doc doc"""
+    """get reset password token"""
     email = request.form.get("email")
 
     try:
