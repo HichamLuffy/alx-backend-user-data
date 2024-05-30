@@ -10,6 +10,7 @@ AUTH = Auth()
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login():
+    """log in"""
     email = request.form.get("email")
     password = request.form.get("password")
     if not AUTH.valid_login(email, password):
@@ -22,6 +23,7 @@ def login():
 
 @app.route("/users", methods=["POST"])
 def users():
+    """register user"""
     email = request.form.get("email")
     password = request.form.get("password")
     try:
@@ -36,13 +38,13 @@ def users():
 
 @app.route("/", methods=["GET"])
 def welcome() -> Response:
-    """doc doc doc"""
+    """welcome"""
     return jsonify({"message": "Bienvenue"})
 
 
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout() -> Response:
-    """doc doc doc"""
+    """log out"""
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
@@ -51,8 +53,22 @@ def logout() -> Response:
     return redirect("/")
 
 
+@app.route("/reset_password", methods=["PUT"])
+def reset_password():
+    """reset password"""
+    email = request.form.get("email")
+    reset_token = request.form.get("reset_token")
+    new_password = request.form.get("new_password")
+    try:
+        AUTH.update_password(reset_token, new_password)
+    except ValueError:
+        abort(403)
+    return jsonify({"email": email, "message": "Password updated"}), 200
+
+
 @app.route("/profile", methods=["GET"])
 def profile():
+    """profile"""
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
